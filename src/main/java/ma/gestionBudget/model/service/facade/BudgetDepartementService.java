@@ -12,7 +12,8 @@ public interface BudgetDepartementService {
 	public List<BudgetDepartement> findAll();
 	public BudgetDepartement findById(Long id);
 	public List<BudgetDepartement> findByMontantTotal(double montantTotal);
-	public List<BudgetDepartement> finByRefBudget(String ref);
+	public List<BudgetDepartement> findByRefBudget(String ref);
+	public List<BudgetDepartement> findByRefDepartement(String refDepartement);
 	public Long deleteByRefBudget(String ref); 
 	public int deleteById(long id);
     public BudgetDepartement findByReference(String ref);

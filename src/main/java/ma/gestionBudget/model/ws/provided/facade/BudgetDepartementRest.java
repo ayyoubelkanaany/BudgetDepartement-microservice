@@ -22,7 +22,7 @@ import ma.gestionBudget.model.ws.required.facade.BudgetDepartementCompteComptabl
 import ma.gestionBudget.model.ws.required.vo.BudgetDepartementCompteComptableVo;
 import net.bytebuddy.asm.Advice.Return;
 
-@CrossOrigin(origins = "http://localhost:4200")
+
 @Api("Cette class permet de gerer les traiements relative aux budgets à savoir Save, FindAll, ...etc.")
 @RestController
 public class BudgetDepartementRest {
@@ -32,10 +32,15 @@ public class BudgetDepartementRest {
 	@Autowired
 	private BudgetDepartementServiceImpl budgetDepartementServiceImpl;
 
-
 	@Autowired
 	private BDConverter bdconveter;
-			
+	
+	@ApiOperation("Cette methode permet de trouver l'ensemble des budgetDepartement par departement")
+	@RequestMapping(value = "/budgetDepartements/refDepartement/{refDepartement}",method = RequestMethod.GET)
+	public List<BudgetDepartement> findByRefDepartements(@PathVariable String refDepartement) {
+		return budgetDepartementServiceImpl.findByRefDepartement(refDepartement);
+	}
+
 	
 	@ApiOperation("Cette methode permet de trouver l'ensemble des budgetDepartement par budget")
 	@RequestMapping(value = "/budgetDepartements/reference/{reference}",method = RequestMethod.GET)
@@ -47,7 +52,7 @@ public class BudgetDepartementRest {
 	@ApiOperation("Cette methode permet de trouver l'ensemble des budgetDepartement par budget")
 	@RequestMapping(value = "/budgetDepartements/refBudget/{refBudget}",method = RequestMethod.GET)
      public List<BudgetDepartementVo> finByRefBudget(@PathVariable String refBudget) {
-		return bdconveter.toListVo((budgetDepartementServiceImpl.finByRefBudget(refBudget)));
+		return bdconveter.toListVo((budgetDepartementServiceImpl.findByRefBudget(refBudget)));
 	}
 	
 	
@@ -81,8 +86,8 @@ public class BudgetDepartementRest {
 	@ApiOperation("Cette methode permet de stocker un budgetDepartement")
 	@RequestMapping(value = "/budgetDepartements",method = RequestMethod.POST)
 	public int save(@RequestBody BudgetDepartementVo budgetDepartementvo) {
-		 budgetDepartementServiceImpl.save(bdconveter.toBean(budgetDepartementvo));
-		return budgetDepartementCompteComptableRestRequired.save(budgetDepartementvo.getBudgetDepartementCompteComptableVo());
+		return budgetDepartementServiceImpl.save(bdconveter.toBean(budgetDepartementvo));
+		 //budgetDepartementCompteComptableRestRequired.save(budgetDepartementvo.getBudgetDepartementCompteComptableVo());
 		
 	}
 		

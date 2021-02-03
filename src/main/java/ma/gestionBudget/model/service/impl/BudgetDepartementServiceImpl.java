@@ -87,14 +87,15 @@ public class BudgetDepartementServiceImpl implements BudgetDepartementService {
 	public int updateBudgetDepartement(BudgetDepartement budgetDepartement) {
 		if(budgetDepartement.getId() == null) {
 		  	     save(budgetDepartement);
+		  	   return 1;
 		}
 		  
     else {
     	budgetDepartement.setMontantTotal(budgetDepartement.getMontantFonctionement()+budgetDepartement.getMontantInvestisement()); 
 		this.budgetDepartementRepository.save(budgetDepartement);
-		
+		return 2;
 	}
-		return 1;
+		
 		
 	}
 
@@ -125,10 +126,9 @@ public class BudgetDepartementServiceImpl implements BudgetDepartementService {
 	@Transactional
 	@Override
 	public int deleteById(long id) {
-		if(id != 0) {
-			////supprimer la liste des budgetdepartementcomptecomptable
-			
-			 this.budgetDepartementRepository.deleteById(id);
+		BudgetDepartement loadedBudgetDepartement = findById(id);
+		if(id != 0 && loadedBudgetDepartement!=null) {
+		 this.budgetDepartementRepository.deleteById(id);
 			return 1;
 		} else {
 			return -1;
@@ -137,7 +137,7 @@ public class BudgetDepartementServiceImpl implements BudgetDepartementService {
 	}
 	
 	@Override
-	public List<BudgetDepartement> finByRefBudget(String ref) {
+	public List<BudgetDepartement> findByRefBudget(String ref) {
 		return this.budgetDepartementRepository.findByRefBudget(ref);
 	}
 	@Override
@@ -159,6 +159,14 @@ public class BudgetDepartementServiceImpl implements BudgetDepartementService {
 			return 2;
 		}
 		
+	}
+
+
+
+	@Override
+	public List<BudgetDepartement> findByRefDepartement(String refDepartement) {
+		
+		return this.budgetDepartementRepository.findByRefDepartement(refDepartement);
 	}
 	
 }

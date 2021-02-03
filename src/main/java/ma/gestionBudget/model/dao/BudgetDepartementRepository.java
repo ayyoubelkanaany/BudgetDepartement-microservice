@@ -13,5 +13,5 @@ public interface BudgetDepartementRepository extends JpaRepository<BudgetDeparte
     public List<BudgetDepartement> findByRefBudget(String ref);
     public Long deleteByRefBudget(String ref); 
     public BudgetDepartement findByReference(String ref);
-    
+    public List<BudgetDepartement> findByRefDepartement(String refDepartement);
 }
